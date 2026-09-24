@@ -1,0 +1,10 @@
+{
+  "description": "An interactive, minimalistic resume website that engages visitors through a story-driven experience, showcasing skills and achievements creatively.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

@@ -1,0 +1,139 @@
+/* Fonts: "Press Start 2P" for titles, "Geist Pixel" for easy-to-read pixel text. */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist+Pixel&family=Press+Start+2P&display=swap');
+@import 'tailwindcss';
+
+/* Adds the classes `font-pixel` (titles) and `font-body` (reading text) */
+@theme {
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-body: 'Geist Pixel', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background: #2b2a55;
+  color: #3b2a2a;
+  overflow: hidden;
+  height: 100dvh;
+  user-select: none;
+  -webkit-font-smoothing: none;
+}
+
+/* Title-font text is always shown in capitals, like an old game */
+.font-pixel {
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* Keyboard users can see where they are */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px dashed currentColor;
+  outline-offset: 3px;
+}
+
+/* ─── Pixel corners: cuts a little square off each corner of a box ─── */
+.pixel-corners {
+  clip-path: polygon(
+    0 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0,
+    calc(100% - 6px) 0, calc(100% - 6px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 6px, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px), calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%,
+    6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px), 3px calc(100% - 6px), 0 calc(100% - 6px)
+  );
+}
+.pixel-corners-sm {
+  clip-path: polygon(
+    0 3px, 3px 3px, 3px 0, calc(100% - 3px) 0, calc(100% - 3px) 3px, 100% 3px,
+    100% calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%,
+    3px 100%, 3px calc(100% - 3px), 0 calc(100% - 3px)
+  );
+}
+
+/* A hard, blocky drop shadow (no blur — very 16-bit) */
+.pixel-shadow {
+  filter: drop-shadow(0 4px 0 rgba(43, 30, 30, 0.45));
+}
+
+/* Chunky buttons that press down when clicked */
+.pixel-button {
+  transition: transform 0.05s steps(1);
+}
+.pixel-button:active {
+  transform: translateY(2px);
+}
+
+/* ─── Menu choices: an RPG-style ▶ cursor appears on hover ─── */
+.menu-choice {
+  position: relative;
+}
+.menu-choice:hover,
+.menu-choice:focus-visible {
+  background-color: rgba(111, 176, 80, 0.18);
+}
+.menu-choice::before {
+  content: '▶';
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 9px;
+  opacity: 0;
+}
+.menu-choice:hover::before,
+.menu-choice:focus-visible::before {
+  opacity: 1;
+  animation: nudge 0.6s steps(2) infinite;
+}
+@keyframes nudge { 50% { transform: translate(2px, -50%) } }
+
+/* ─── Little animations (in the scenes, 1px = one game pixel) ─── */
+
+/* Blinking text cursor and "next" arrow */
+@keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: 0 } }
+.cursor { display: inline-block; animation: blink 0.8s steps(1) infinite; }
+
+/* Joy breathing */
+@keyframes idleBob { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-1px) } }
+.idle-bob { animation: idleBob 1.6s steps(1) infinite; }
+
+/* The cat breathing in its sleep */
+@keyframes catBreathe { 0%, 100% { transform: scaleY(1) } 50% { transform: scaleY(1.06) } }
+.cat-breathe { animation: catBreathe 3s steps(1) infinite; transform-box: fill-box; transform-origin: bottom; }
+
+/* Stars, fairy lights and fireflies (three different rhythms) */
+@keyframes twinkle { 0%, 100% { opacity: 1 } 50% { opacity: 0.25 } }
+.twinkle, .firefly { animation: twinkle 2.4s steps(2) infinite; }
+.twinkle-1 { animation-delay: 0.8s; }
+.twinkle-2 { animation-delay: 1.6s; }
+@keyframes drift { 0%, 100% { transform: translate(0, 0) } 50% { transform: translate(3px, -2px) } }
+.firefly { animation: twinkle 2s steps(2) infinite, drift 4s steps(4) infinite; }
+
+/* Lamp light gently breathing */
+@keyframes lampFlicker { 0%, 100% { opacity: 1 } 50% { opacity: 0.8 } }
+.lamp-flicker { animation: lampFlicker 3s steps(3) infinite; }
+
+/* Puffs of steam or chimney smoke rising */
+@keyframes smoke {
+  0% { transform: translateY(0); opacity: 0.8 }
+  100% { transform: translateY(-8px); opacity: 0 }
+}
+.smoke { animation: smoke 2.4s steps(6) infinite; }
+
+/* Hanging plant swaying */
+@keyframes sway { 0%, 100% { transform: translateX(0) } 50% { transform: translateX(1px) } }
+.sway { animation: sway 2.4s steps(1) infinite; }
+
+/* Mailbox flag waving */
+@keyframes wave { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(1px) } }
+.wave { animation: wave 1.2s steps(1) infinite; }
+
+/* Fade between chapters, in chunky steps */
+@keyframes fadeOut { from { opacity: 1 } to { opacity: 0 } }
+
+/* Respect visitors who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* "Press start" blinking slowly */
+.blink-slow { animation: blink 1.4s steps(1) infinite; }
