@@ -1,7 +1,8 @@
 {
-  "description": "An interactive, minimalistic resume website that engages visitors through a story-driven experience, showcasing skills and achievements creatively.",
+  "title": "Joy Kosol · Interactive Resume",
+  "description": "UX/UI designer in Vancouver. Step into my cozy pixel-art house and explore my work, projects and skills.",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,
